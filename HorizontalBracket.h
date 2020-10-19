@@ -23,19 +23,19 @@ private:
 	void icvprLabelColor(const cv::Mat& _labelImg, cv::Mat& _colorLabelImg);
 	cv::Scalar icvprGetRandomColor();
 	int icvprCcaByTwoPass(const cv::Mat& _binImg, cv::Mat& _lableImg);
-	// ÊäÈëÍ¼Æ¬£¬×ª»»Îª¶şÖµÍ¼Æ¬,±³¾°ÊÇ0£¬Ç°¾°ÊÇ1
+	// è¾“å…¥å›¾ç‰‡ï¼Œè½¬æ¢ä¸ºäºŒå€¼å›¾ç‰‡,èƒŒæ™¯æ˜¯0ï¼Œå‰æ™¯æ˜¯1
 	Mat ConvertToBinImage(Mat image, int MaxValue, int BinaryType);
 public:
-	// ¼ì²âË®Æ½À¨ºÅÍ¼ÏñµÄÀ¨ºÅºÍÊı×Ö
+	// æ£€æµ‹æ°´å¹³æ‹¬å·å›¾åƒçš„æ‹¬å·å’Œæ•°å­—
 	void detectHorizontalBracketAndNum(Mat image, OCR &ocr, vector<string>& numbers, vector<pair<int, int> >& bracket_pos);
 	
-	// ¼ì²â´¹Ö±À¨ºÅÍ¼ÏñµÄÀ¨ºÅ
+	// æ£€æµ‹å‚ç›´æ‹¬å·å›¾åƒçš„æ‹¬å·
 	vector<pair<int, int> > detectVerticalBracket(Mat image);
-	// ¼ì²â´¹Ö±À¨ºÅÍ¼ÏñÀ¨ºÅÄÚµÄÊı×Ö
+	// æ£€æµ‹å‚ç›´æ‹¬å·å›¾åƒæ‹¬å·å†…çš„æ•°å­—
 	vector<string> detectVerticalBracketNum(Mat image, OCR &ocr);
-	// ½øĞĞÀ¨ºÅÎ»ÖÃµÄÓ³Éä£¬scale:ÆğÊ¼µÄÏñËØ×İ×ø±êcol_startºÍÊı×Öcol_start_num£¬µ¥Î»³¤¶ÈµÄÏñËØ´óĞ¡unit_pixels,ÒÔ¼°µ¥Î»³¤¶Èunit
+	// è¿›è¡Œæ‹¬å·ä½ç½®çš„æ˜ å°„ï¼Œscale:èµ·å§‹çš„åƒç´ çºµåæ ‡col_startå’Œæ•°å­—col_start_numï¼Œå•ä½é•¿åº¦çš„åƒç´ å¤§å°unit_pixels,ä»¥åŠå•ä½é•¿åº¦unit
 	vector<pair<double, double>> convertToActualBracket(vector<double>scale, vector<pair<int, int> > bracket_pos);
-	// ¼ì²âCÆ×Êı×Ö
+	// æ£€æµ‹Cè°±æ•°å­—
 	void detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbers, vector<pair<int, int> >& bracket_pos);
 
 	void detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbers, vector<pair<int, int>>& bracket_pos);

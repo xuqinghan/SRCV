@@ -2,7 +2,7 @@
 
 
 void SVM::SVMTrain(string trainpath) {
-	//»ñÈ¡ÑµÁ·Êý¾Ý
+	//èŽ·å–è®­ç»ƒæ•°æ®
 	Mat classes;
 	Mat trainingData;
 	Mat trainingImages;
@@ -15,7 +15,7 @@ void SVM::SVMTrain(string trainpath) {
 	Mat(trainingLabels).copyTo(classes);
 	svm->train(trainingData, cv::ml::ROW_SAMPLE, classes);
 	svm->save("svm.xml");
-	cout << "SVM train done£¡" << endl;
+	cout << "SVM train doneï¼" << endl;
 
 }
 
@@ -51,10 +51,10 @@ void SVM::SVMTest(string testpath) {
 			correctsize++;
 		}
 		else {
-			cout << "´íÎóÊ¶±ðµÄÍ¼Æ¬£º" <<  filenames[i] << endl;
+			cout << "é”™è¯¯è¯†åˆ«çš„å›¾ç‰‡ï¼š" <<  filenames[i] << endl;
 		}
 	}
-	cout << "ÕýÈ·ÂÊÎª£º" << double(correctsize) / double(wholesize) << endl;
+	cout << "æ­£ç¡®çŽ‡ä¸ºï¼š" << double(correctsize) / double(wholesize) << endl;
 
 }
 
@@ -62,7 +62,7 @@ void SVM::SVMTest(string testpath) {
 
 SVM::SVM()
 {
-	// ³õÊ¼»¯
+	// åˆå§‹åŒ–
 	svm = cv::ml::SVM::create();
 	svm->setType(cv::ml::SVM::C_SVC);
 	svm->setKernel(cv::ml::SVM::LINEAR);

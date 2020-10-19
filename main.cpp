@@ -123,7 +123,7 @@ int main() {
 			}
 		}
 		else if (c == '6') {
-			// ��H���Ϸ����ݴ���
+			// 对H谱上方数据处理
 			for (int i = 0; i <= 29; i++) {
 				fout << endl;
 				cout << endl;
@@ -137,15 +137,15 @@ int main() {
 				
 				vector<string> numbers;
 				vector<pair<int, int> > bracket_pos;
-				// ���̶ȳߣ��õ���ʼ������������col_start������col_start_num����λ���ȵ����ش�Сunit_pixels,�Լ���λ����unit
+				// 检测刻度尺，得到起始的像素纵坐标col_start和数字col_start_num，单位长度的像素大小unit_pixels,以及单位长度unit
 				vector<double> scale = cut.ScaleDetect(image, ocr);
-				// ���ˮƽ���ŵ������Լ���Ӧ����������λ��
+				// 检测水平括号的数字以及对应的括号像素位置
 				horizontal.detectCNTRNum(image, ocr, numbers, bracket_pos);
 				for (int i = 0; i < numbers.size(); i++) {
 					cout << numbers[i] << endl;
 					fout << numbers[i] << endl;
 				}
-				// �����ŵ�����λ��ת��Ϊʵ������
+				// 将括号的像素位置转换为实际坐标
 				
 				vector<pair<double, double>> actual_bracket = horizontal.convertToActualBracket(scale, bracket_pos);
 				for (int k = 0; k < actual_bracket.size() && k < numbers.size(); k++) {
@@ -159,7 +159,7 @@ int main() {
 			}
 		}
 		else if (c == '7') {
-			// ��C�����ݴ���
+			// 对C谱数据处理
 			for (int i = 0; i <= 29; i++) {
 				fout << endl;
 				cout << endl;
@@ -170,9 +170,9 @@ int main() {
 
 				vector<string> numbers;
 				vector<pair<int, int> > bracket_pos;
-				// ���̶ȳߣ��õ���ʼ������������col_start������col_start_num����λ���ȵ����ش�Сunit_pixels,�Լ���λ����unit
+				// 检测刻度尺，得到起始的像素纵坐标col_start和数字col_start_num，单位长度的像素大小unit_pixels,以及单位长度unit
 				vector<double> scale = cut.ScaleDetect(image, ocr);
-				// ���ˮƽ���ŵ������Լ���Ӧ����������λ��
+				// 检测水平括号的数字以及对应的括号像素位置
 				horizontal.detectWNTRNum(image, ocr, numbers, bracket_pos);
 				fout << "shift---------------------------------------------------" << endl;
 				fout << filepath << endl;
@@ -180,7 +180,7 @@ int main() {
 				//	cout << numbers[i] << endl;
 					fout << numbers[i] << endl;
 				}
-				// �����ŵ�����λ��ת��Ϊʵ������
+				// 将括号的像素位置转换为实际坐标
 				//fout << filepath << endl;
 				vector<pair<double, double>> actual_bracket = horizontal.convertToActualBracket(scale, bracket_pos);
 				for (int k = 0; k < actual_bracket.size() && k < numbers.size(); k++) {

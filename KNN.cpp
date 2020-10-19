@@ -2,7 +2,7 @@
 
 
 void KNN::KNNTrain(string trainpath) {
-	//»ñÈ¡ÑµÁ·Êý¾Ý
+	//èŽ·å–è®­ç»ƒæ•°æ®
 	Mat classes;
 	Mat trainingData;
 	Mat trainingImages;
@@ -14,7 +14,7 @@ void KNN::KNNTrain(string trainpath) {
 	knn->setDefaultK(4);
 	knn->train(trainingData, cv::ml::ROW_SAMPLE, classes);
 	knn->save("svm.xml");
-	cout << "KNN train done£¡" << endl;
+	cout << "KNN train doneï¼" << endl;
 }
 
 
@@ -56,10 +56,10 @@ void KNN::KNNTest(string trainpath) {
 			correctsize++;
 		}
 		else {
-			cout << "´íÎóÊ¶±ðµÄÍ¼Æ¬£º" << filenames[i] << endl;
+			cout << "é”™è¯¯è¯†åˆ«çš„å›¾ç‰‡ï¼š" << filenames[i] << endl;
 		}
 	}
-	cout << "ÕýÈ·ÂÊÎª£º" << double(correctsize) / double(wholesize) << endl;
+	cout << "æ­£ç¡®çŽ‡ä¸ºï¼š" << double(correctsize) / double(wholesize) << endl;
 }
 
 

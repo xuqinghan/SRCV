@@ -1,28 +1,28 @@
 #include "HorizontalBracket.h"
 
-// °´ÕÕĞĞ×ø±êÉıĞòÅÅÁĞ
+// æŒ‰ç…§è¡Œåæ ‡å‡åºæ’åˆ—
 bool cmp_x2(pair<int, int> a, pair<int, int> b) {
 	return (a.first < b.first);
 }
 
-// °´ÕÕÁĞ×ø±êÉıĞòÅÅÁĞ
+// æŒ‰ç…§åˆ—åæ ‡å‡åºæ’åˆ—
 bool cmp_y2(pair<int, int> a, pair<int, int> b) {
 	return (a.second < b.second);
 }
 
-// Point°´ÕÕĞĞ×ø±ê½µĞòÅÅÁĞ
+// PointæŒ‰ç…§è¡Œåæ ‡é™åºæ’åˆ—
 bool point_cmp_row2(pair<Point, Point> a, pair<Point, Point> b) {
 	return (a.first.y > b.first.y);
 }
 
-// Point°´ÕÕÁĞ×ø±êÉıĞòÅÅÁĞ
+// PointæŒ‰ç…§åˆ—åæ ‡å‡åºæ’åˆ—
 bool point_cmp_col2(pair<Point, Point> a, pair<Point, Point> b) {
 	return (a.first.x < b.first.x);
 }
 
 HorizontalBracket::HorizontalBracket()
 {
-	//cout << "Horizonta³õÊ¼»¯" << endl;
+	//cout << "Horizontaåˆå§‹åŒ–" << endl;
 }
 
 
@@ -30,14 +30,14 @@ HorizontalBracket::~HorizontalBracket()
 {
 }
 
-// ÊäÈëÍ¼Æ¬£¬×ª»»Îª¶şÖµÍ¼Æ¬,±³¾°ÊÇ0£¬Ç°¾°ÊÇ1
+// è¾“å…¥å›¾ç‰‡ï¼Œè½¬æ¢ä¸ºäºŒå€¼å›¾ç‰‡,èƒŒæ™¯æ˜¯0ï¼Œå‰æ™¯æ˜¯1
 Mat HorizontalBracket::ConvertToBinImage(Mat image, int MaxValue, int BinaryType) {
 	Mat image_bin, gray;
-	// ×ªÎª»Ò¶ÈÍ¼
+	// è½¬ä¸ºç°åº¦å›¾
 	cvtColor(image, gray, COLOR_BGR2GRAY);
-	// ÖĞÖµÂË²¨
+	// ä¸­å€¼æ»¤æ³¢
 	// medianBlur(gray, gray, 3);
-	// ×ÔÊÊÓ¦ãĞÖµ
+	// è‡ªé€‚åº”é˜ˆå€¼
 	adaptiveThreshold(gray, image_bin, MaxValue, ADAPTIVE_THRESH_MEAN_C, BinaryType, 7, 10);
 	return image_bin;
 }
@@ -216,7 +216,7 @@ void HorizontalBracket::icvprLabelColor(const cv::Mat & _labelImg, cv::Mat & _co
 }
 
 
-// ¼ì²âË®Æ½À¨ºÅÒÔ¼°À¨ºÅÄÚµÄÊı×Ö
+// æ£€æµ‹æ°´å¹³æ‹¬å·ä»¥åŠæ‹¬å·å†…çš„æ•°å­—
 void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vector<string> &numbers, vector<pair<int, int> > &bracket_pos) {
 
 	Mat grayImage = ConvertToBinImage(image, 255, THRESH_BINARY);
@@ -240,7 +240,7 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 	imwrite("result.bmp", grayImg);
 	cv::Mat colorLabelImg;
 	icvprLabelColor(labelImg, colorLabelImg);
-	// ¼ÇÂ¼ÇĞ¸îµÄÊı×ÖµÄ×ø±ê£¬point¸ñÊ½
+	// è®°å½•åˆ‡å‰²çš„æ•°å­—çš„åæ ‡ï¼Œpointæ ¼å¼
 	vector<pair<Point, Point> > NumSet;
 
 	for (int i = 2; i < labels.size(); i++) {
@@ -251,7 +251,7 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡Çø·ÖÊı×Ö¿é
+		// æ ¹æ®æ–¹å—çš„å¤§å°åŒºåˆ†æ•°å­—å—
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x2);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y2);
 		int x1 = sort_by_row.front().first;
@@ -268,16 +268,16 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 	}
 
 
-	// °´ÕÕĞĞ×ø±ê´ÓÏÂµ½ÉÏµÄË³Ğò½øĞĞÅÅĞò
+	// æŒ‰ç…§è¡Œåæ ‡ä»ä¸‹åˆ°ä¸Šçš„é¡ºåºè¿›è¡Œæ’åº
 
 	std::sort(NumSet.begin(), NumSet.end(), point_cmp_row2);
-	// Ë®Æ½À¨ºÅµÄ»ù×¼Î»ÖÃ
+	// æ°´å¹³æ‹¬å·çš„åŸºå‡†ä½ç½®
 	int horizontalbase = NumSet.back().first.y;
 
 	//cout << "firstYY:" << horizontalbase << endl;
-	// À¨ºÅÎ»ÖÃ¼¯ºÏ
+	// æ‹¬å·ä½ç½®é›†åˆ
 	vector<pair<Point, Point> > brackets;
-	// À¨ºÅÊı×Ö¼¯ºÏ
+	// æ‹¬å·æ•°å­—é›†åˆ
 	vector<pair<Point, Point> > bracketnumbers;
 	for (int i = 0; i < NumSet.size(); i++) {
 		if (NumSet[i].first.y >= horizontalbase - 5 && NumSet[i].first.y <= horizontalbase + 5) {
@@ -290,9 +290,9 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 	
 
 
-	// ¶ÔÀ¨ºÅÎ»ÖÃ¼¯ºÏ½øĞĞÁĞÅÅĞò£¬°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò
+	// å¯¹æ‹¬å·ä½ç½®é›†åˆè¿›è¡Œåˆ—æ’åºï¼ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåº
 	std::sort(brackets.begin(), brackets.end(), point_cmp_col2);
-	// ¶ÔÀ¨ºÅÊı×ÖÎ»ÖÃ½øĞĞÁĞÅÅĞò£¬°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò
+	// å¯¹æ‹¬å·æ•°å­—ä½ç½®è¿›è¡Œåˆ—æ’åºï¼ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåº
 	std::sort(bracketnumbers.begin(), bracketnumbers.end(), point_cmp_col2);
 
 	std::cout << "pixel coordinate of bracket" << endl;
@@ -301,15 +301,15 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 	//	cout << "XX:" << bracketnumbers[i].first.x << "   YY:" << bracketnumbers[i].first.y << endl;
 	//				}
 //	cout << "brackets.size:" << brackets.size()<< endl;
-	// ×¼È·ÂÊ100%
-	// ¶ÔÃ¿¸öË®Æ½À¨ºÅµÄ1/5´¦½øĞĞĞĞÉ¨Ãè£¬¼ì²â×óÓÒÎ»ÖÃ
+	// å‡†ç¡®ç‡100%
+	// å¯¹æ¯ä¸ªæ°´å¹³æ‹¬å·çš„1/5å¤„è¿›è¡Œè¡Œæ‰«æï¼Œæ£€æµ‹å·¦å³ä½ç½®
 	for (int i = 0; i < brackets.size(); i++) {
 
-		// É¨ÃèÏß
+		// æ‰«æçº¿
 		int bracket_base = brackets[i].first.y + 3;
 
 		Vec3b basecolor = colorLabelImg.at<Vec3b>(brackets[i].second.y, (brackets[i].first.x + brackets[i].second.x) / 2);
-		// »ù×¼É«
+		// åŸºå‡†è‰²
 		for (int k = brackets[i].first.y; k <= brackets[i].second.y; k++) {
 			if (basecolor != Vec3b(0, 0, 0)) {
 				break;
@@ -326,11 +326,11 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 			}
 		}
 		for (int k = 0; k < temp_brackets.size() - 1; k++) {
-			// Èç¹û¾àÀë¹ı½ü
+			// å¦‚æœè·ç¦»è¿‡è¿‘
 			if (temp_brackets[k + 1] - temp_brackets[k] <= 4) {
 				continue;
 			}
-			// Èç¹ûÓĞÖØ¸´
+			// å¦‚æœæœ‰é‡å¤
 			if (!bracket_pos.empty() && pair<int, int>(temp_brackets[k], temp_brackets[k + 1]) == bracket_pos.back()) {
 				continue;
 			}
@@ -342,7 +342,7 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 
 
 
-	// ´òÓ¡À¨ºÅÎ»ÖÃ£¬¼ì²é£¬È«²¿OK!!!
+	// æ‰“å°æ‹¬å·ä½ç½®ï¼Œæ£€æŸ¥ï¼Œå…¨éƒ¨OK!!!
 	/*
 	for (int i = 0; i < brackets.size(); i++) {
 		cout << brackets[i].first.x << " " << brackets[i].first.y << endl;
@@ -375,18 +375,18 @@ void HorizontalBracket::detectHorizontalBracketAndNum(Mat image, OCR &ocr, vecto
 	vector<pair<Point, Point> > Singlenum;
 	for (int i = 0; i < bracketnumbers.size(); i++) {
 		Singlenum.push_back(bracketnumbers[i]);
-		// Ã¿3¸ö½ØÈ¡Ò»¸öÊı×Ö
+		// æ¯3ä¸ªæˆªå–ä¸€ä¸ªæ•°å­—
 		count2 = lenk[count1];
 		if (Singlenum.size() == count2+1) {
-			// °´ĞĞ½µĞòÅÅÁĞ
+			// æŒ‰è¡Œé™åºæ’åˆ—
 			//sort(Singlenum.begin(), Singlenum.end(), point_cmp_col2);
 			//sort(Singlenum.begin(), Singlenum.end(), point_cmp_row2);
 			sort(Singlenum.begin(), Singlenum.end(), point_cmp_row2);
 			vector<Mat> num_mat;
 			for (int k = 0; k < (count2 + 1); k++) {
-				// ÇĞ¸îÊı×Ö
+				// åˆ‡å‰²æ•°å­—
 				Mat temp = grayImage(Rect(Singlenum[k].first.x, Singlenum[k].first.y, Singlenum[k].second.x - Singlenum[k].first.x + 1, Singlenum[k].second.y - Singlenum[k].first.y + 1));
-				// Ë³Ê±ÕëĞı×ª90¶È
+				// é¡ºæ—¶é’ˆæ—‹è½¬90åº¦
 				transpose(temp, temp);
 				flip(temp, temp, 1);
 				//imshow("temp", temp);
@@ -442,7 +442,7 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	imwrite("result.bmp", grayImg);
 	cv::Mat colorLabelImg;
 	icvprLabelColor(labelImg, colorLabelImg);
-	// ¼ÇÂ¼ÇĞ¸îµÄÊı×ÖµÄ×ø±ê£¬point¸ñÊ½
+	// è®°å½•åˆ‡å‰²çš„æ•°å­—çš„åæ ‡ï¼Œpointæ ¼å¼
 	vector<pair<Point, Point> > NumSet;
 
 	for (int i = 2; i < labels.size(); i++) {
@@ -453,7 +453,7 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡Çø·ÖÊı×Ö¿é
+		// æ ¹æ®æ–¹å—çš„å¤§å°åŒºåˆ†æ•°å­—å—
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x2);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y2);
 		int x1 = sort_by_row.front().first;
@@ -473,7 +473,7 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	}
 
 
-	// °´ÕÕĞĞ×ø±ê´ÓÏÂµ½ÉÏµÄË³Ğò½øĞĞÅÅĞò
+	// æŒ‰ç…§è¡Œåæ ‡ä»ä¸‹åˆ°ä¸Šçš„é¡ºåºè¿›è¡Œæ’åº
 	//std::sort(NumSet.begin(), NumSet.end(), point_cmp_row2);
 	std::sort(NumSet.begin(), NumSet.end(), point_cmp_col2);
 	
@@ -481,11 +481,11 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	
 
 
-	// Ë®Æ½À¨ºÅµÄ»ù×¼Î»ÖÃ
+	// æ°´å¹³æ‹¬å·çš„åŸºå‡†ä½ç½®
 	int horizontalbase = NumSet.back().first.y;
-	// À¨ºÅÎ»ÖÃ¼¯ºÏ
+	// æ‹¬å·ä½ç½®é›†åˆ
 	vector<pair<Point, Point> > brackets;
-	// À¨ºÅÊı×Ö¼¯ºÏ
+	// æ‹¬å·æ•°å­—é›†åˆ
 	vector<pair<Point, Point> > bracketnumbers;
 	for (int i = 0; i < NumSet.size(); i++) {
 		
@@ -494,22 +494,22 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 		
 	}
 /*
-	// ¶ÔÀ¨ºÅÎ»ÖÃ¼¯ºÏ½øĞĞÁĞÅÅĞò£¬°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò
+	// å¯¹æ‹¬å·ä½ç½®é›†åˆè¿›è¡Œåˆ—æ’åºï¼ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåº
 	std::sort(brackets.begin(), brackets.end(), point_cmp_col2);
-	// ¶ÔÀ¨ºÅÊı×ÖÎ»ÖÃ½øĞĞÁĞÅÅĞò£¬°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò
+	// å¯¹æ‹¬å·æ•°å­—ä½ç½®è¿›è¡Œåˆ—æ’åºï¼ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåº
 	std::sort(bracketnumbers.begin(), bracketnumbers.end(), point_cmp_col2);
 
-	std::cout << "À¨ºÅÏñËØÎ»ÖÃ£º" << endl;
+	std::cout << "æ‹¬å·åƒç´ ä½ç½®ï¼š" << endl;
 
-	// ×¼È·ÂÊ100%
-	// ¶ÔÃ¿¸öË®Æ½À¨ºÅµÄ1/5´¦½øĞĞĞĞÉ¨Ãè£¬¼ì²â×óÓÒÎ»ÖÃ
+	// å‡†ç¡®ç‡100%
+	// å¯¹æ¯ä¸ªæ°´å¹³æ‹¬å·çš„1/5å¤„è¿›è¡Œè¡Œæ‰«æï¼Œæ£€æµ‹å·¦å³ä½ç½®
 	for (int i = 0; i < brackets.size(); i++) {
 
-		// É¨ÃèÏß
+		// æ‰«æçº¿
 		int bracket_base = brackets[i].first.y + 3;
 
 		Vec3b basecolor = colorLabelImg.at<Vec3b>(brackets[i].second.y, (brackets[i].first.x + brackets[i].second.x) / 2);
-		// »ù×¼É«
+		// åŸºå‡†è‰²
 		for (int k = brackets[i].first.y; k <= brackets[i].second.y; k++) {
 			if (basecolor != Vec3b(0, 0, 0)) {
 				break;
@@ -526,11 +526,11 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 			}
 		}
 		for (int k = 0; k < temp_brackets.size() - 1; k++) {
-			// Èç¹û¾àÀë¹ı½ü
+			// å¦‚æœè·ç¦»è¿‡è¿‘
 			if (temp_brackets[k + 1] - temp_brackets[k] <= 4) {
 				continue;
 			}
-			// Èç¹ûÓĞÖØ¸´
+			// å¦‚æœæœ‰é‡å¤
 			if (!bracket_pos.empty() && pair<int, int>(temp_brackets[k], temp_brackets[k + 1]) == bracket_pos.back()) {
 				continue;
 			}
@@ -542,7 +542,7 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 
 	*/
 
-	// ´òÓ¡À¨ºÅÎ»ÖÃ£¬¼ì²é£¬È«²¿OK!!!
+	// æ‰“å°æ‹¬å·ä½ç½®ï¼Œæ£€æŸ¥ï¼Œå…¨éƒ¨OK!!!
 	/*
 	for (int i = 0; i < brackets.size(); i++) {
 		cout << brackets[i].first.x << " " << brackets[i].first.y << endl;
@@ -553,17 +553,17 @@ void HorizontalBracket::detectCNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	vector<pair<Point, Point> > Singlenum;
 	for (int i = 0; i < bracketnumbers.size(); i++) {
 		Singlenum.push_back(bracketnumbers[i]);
-		// Ã¿3¸ö½ØÈ¡Ò»¸öÊı×Ö
+		// æ¯3ä¸ªæˆªå–ä¸€ä¸ªæ•°å­—
 		if (Singlenum.size() == 3) {
-			// °´ĞĞ½µĞòÅÅÁĞ
+			// æŒ‰è¡Œé™åºæ’åˆ—
 			//sort(Singlenum.begin(), Singlenum.end(), point_cmp_row2);
 			sort(Singlenum.begin(), Singlenum.end(), point_cmp_col2);
 			sort(Singlenum.begin(), Singlenum.end(), point_cmp_row2);
 			vector<Mat> num_mat;
 			for (int k = 0; k < 3; k++) {
-				// ÇĞ¸îÊı×Ö
+				// åˆ‡å‰²æ•°å­—
 				Mat temp = grayImage(Rect(Singlenum[k].first.x, Singlenum[k].first.y, Singlenum[k].second.x - Singlenum[k].first.x + 1, Singlenum[k].second.y - Singlenum[k].first.y + 1));
-				// Ë³Ê±ÕëĞı×ª90¶È
+				// é¡ºæ—¶é’ˆæ—‹è½¬90åº¦
 				//cout << "x1:" << Singlenum[k].first.x << "x2:" << Singlenum[k].first.x + 1 << "y1" << Singlenum[k].first.y <<"y2 " << Singlenum[k].first.y + 1 << endl;
 				transpose(temp, temp);
 				flip(temp, temp, 1);
@@ -620,7 +620,7 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	imwrite("result.bmp", grayImg);
 	cv::Mat colorLabelImg;
 	icvprLabelColor(labelImg, colorLabelImg);
-	// ¼ÇÂ¼ÇĞ¸îµÄÊı×ÖµÄ×ø±ê£¬point¸ñÊ½
+	// è®°å½•åˆ‡å‰²çš„æ•°å­—çš„åæ ‡ï¼Œpointæ ¼å¼
 	vector<pair<Point, Point> > NumSet;
 
 	for (int i = 2; i < labels.size(); i++) {
@@ -631,7 +631,7 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡Çø·ÖÊı×Ö¿é
+		// æ ¹æ®æ–¹å—çš„å¤§å°åŒºåˆ†æ•°å­—å—
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x2);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y2);
 		int x1 = sort_by_row.front().first;
@@ -651,7 +651,7 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	}
 
 
-	// °´ÕÕĞĞ×ø±ê´ÓÏÂµ½ÉÏµÄË³Ğò½øĞĞÅÅĞò
+	// æŒ‰ç…§è¡Œåæ ‡ä»ä¸‹åˆ°ä¸Šçš„é¡ºåºè¿›è¡Œæ’åº
 	//std::sort(NumSet.begin(), NumSet.end(), point_cmp_row2);
 	std::sort(NumSet.begin(), NumSet.end(), point_cmp_col2);
 	//std::sort(NumSet.begin(), NumSet.end(), point_cmp_row2);
@@ -661,11 +661,11 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 
 
 
-	// Ë®Æ½À¨ºÅµÄ»ù×¼Î»ÖÃ
+	// æ°´å¹³æ‹¬å·çš„åŸºå‡†ä½ç½®
 	int horizontalbase = NumSet.back().first.y;
-	// À¨ºÅÎ»ÖÃ¼¯ºÏ
+	// æ‹¬å·ä½ç½®é›†åˆ
 	vector<pair<Point, Point> > brackets;
-	// À¨ºÅÊı×Ö¼¯ºÏ
+	// æ‹¬å·æ•°å­—é›†åˆ
 	vector<pair<Point, Point> > bracketnumbers;
 	for (int i = 0; i < NumSet.size(); i++) {
 
@@ -677,22 +677,22 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	//cout << "XXXYY1: " << bracketnumbers.size();
 
 	/*
-		// ¶ÔÀ¨ºÅÎ»ÖÃ¼¯ºÏ½øĞĞÁĞÅÅĞò£¬°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò
+		// å¯¹æ‹¬å·ä½ç½®é›†åˆè¿›è¡Œåˆ—æ’åºï¼ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåº
 		std::sort(brackets.begin(), brackets.end(), point_cmp_col2);
-		// ¶ÔÀ¨ºÅÊı×ÖÎ»ÖÃ½øĞĞÁĞÅÅĞò£¬°´ÕÕ´Ó×óµ½ÓÒµÄË³Ğò
+		// å¯¹æ‹¬å·æ•°å­—ä½ç½®è¿›è¡Œåˆ—æ’åºï¼ŒæŒ‰ç…§ä»å·¦åˆ°å³çš„é¡ºåº
 		std::sort(bracketnumbers.begin(), bracketnumbers.end(), point_cmp_col2);
 
-		std::cout << "À¨ºÅÏñËØÎ»ÖÃ£º" << endl;
+		std::cout << "æ‹¬å·åƒç´ ä½ç½®ï¼š" << endl;
 
-		// ×¼È·ÂÊ100%
-		// ¶ÔÃ¿¸öË®Æ½À¨ºÅµÄ1/5´¦½øĞĞĞĞÉ¨Ãè£¬¼ì²â×óÓÒÎ»ÖÃ
+		// å‡†ç¡®ç‡100%
+		// å¯¹æ¯ä¸ªæ°´å¹³æ‹¬å·çš„1/5å¤„è¿›è¡Œè¡Œæ‰«æï¼Œæ£€æµ‹å·¦å³ä½ç½®
 		for (int i = 0; i < brackets.size(); i++) {
 
-			// É¨ÃèÏß
+			// æ‰«æçº¿
 			int bracket_base = brackets[i].first.y + 3;
 
 			Vec3b basecolor = colorLabelImg.at<Vec3b>(brackets[i].second.y, (brackets[i].first.x + brackets[i].second.x) / 2);
-			// »ù×¼É«
+			// åŸºå‡†è‰²
 			for (int k = brackets[i].first.y; k <= brackets[i].second.y; k++) {
 				if (basecolor != Vec3b(0, 0, 0)) {
 					break;
@@ -709,11 +709,11 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 				}
 			}
 			for (int k = 0; k < temp_brackets.size() - 1; k++) {
-				// Èç¹û¾àÀë¹ı½ü
+				// å¦‚æœè·ç¦»è¿‡è¿‘
 				if (temp_brackets[k + 1] - temp_brackets[k] <= 4) {
 					continue;
 				}
-				// Èç¹ûÓĞÖØ¸´
+				// å¦‚æœæœ‰é‡å¤
 				if (!bracket_pos.empty() && pair<int, int>(temp_brackets[k], temp_brackets[k + 1]) == bracket_pos.back()) {
 					continue;
 				}
@@ -725,7 +725,7 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 
 		*/
 
-		// ´òÓ¡À¨ºÅÎ»ÖÃ£¬¼ì²é£¬È«²¿OK!!!
+		// æ‰“å°æ‹¬å·ä½ç½®ï¼Œæ£€æŸ¥ï¼Œå…¨éƒ¨OK!!!
 		/*
 		for (int i = 0; i < brackets.size(); i++) {
 			cout << brackets[i].first.x << " " << brackets[i].first.y << endl;
@@ -758,21 +758,21 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 	int count2 = 0;
 	for (int i = 0; i < bracketnumbers.size(); i++) {
 		Singlenum.push_back(bracketnumbers[i]);
-		// Ã¿n¸ö½ØÈ¡Ò»¸öÊı×Ö
+		// æ¯nä¸ªæˆªå–ä¸€ä¸ªæ•°å­—
 		
 		
 		count2 = lenk[count1];
 
 		if (Singlenum.size() == (count2+1)) {
-			// °´ĞĞ½µĞòÅÅÁĞ
+			// æŒ‰è¡Œé™åºæ’åˆ—
 			//sort(Singlenum.begin(), Singlenum.end(), point_cmp_row2);
 			sort(Singlenum.begin(), Singlenum.end(), point_cmp_col2);
 			sort(Singlenum.begin(), Singlenum.end(), point_cmp_row2);
 			vector<Mat> num_mat;
 			for (int k = 0; k < (count2 + 1); k++) {
-				// ÇĞ¸îÊı×Ö
+				// åˆ‡å‰²æ•°å­—
 				Mat temp = grayImage(Rect(Singlenum[k].first.x, Singlenum[k].first.y, Singlenum[k].second.x - Singlenum[k].first.x + 1, Singlenum[k].second.y - Singlenum[k].first.y + 1));
-				// Ë³Ê±ÕëĞı×ª90¶È
+				// é¡ºæ—¶é’ˆæ—‹è½¬90åº¦
 				//cout << "x1:" << Singlenum[k].first.x << "x2:" << Singlenum[k].first.x + 1 << "y1" << Singlenum[k].first.y <<"y2 " << Singlenum[k].first.y + 1 << endl;
 				transpose(temp, temp);
 				flip(temp, temp, 1);
@@ -810,7 +810,7 @@ void HorizontalBracket::detectWNTRNum(Mat image, OCR& ocr, vector<string>& numbe
 }
 
 
-// scale:ÆğÊ¼µÄÏñËØ×İ×ø±êcol_startºÍÊı×Öcol_start_num£¬µ¥Î»³¤¶ÈµÄÏñËØ´óĞ¡unit_pixels,ÒÔ¼°µ¥Î»³¤¶Èunit
+// scale:èµ·å§‹çš„åƒç´ çºµåæ ‡col_startå’Œæ•°å­—col_start_numï¼Œå•ä½é•¿åº¦çš„åƒç´ å¤§å°unit_pixels,ä»¥åŠå•ä½é•¿åº¦unit
 vector<pair<double, double>> HorizontalBracket::convertToActualBracket(vector<double>scale, vector<pair<int, int> > bracket_pos) {
 	vector<pair<double, double> > actual_bracket_pos;
 	for (int i = 0; i < bracket_pos.size(); i++) {
@@ -847,7 +847,7 @@ vector<pair<int, int> > HorizontalBracket::detectVerticalBracket(Mat image) {
 	imwrite("result.bmp", grayImg);
 	cv::Mat colorLabelImg;
 	icvprLabelColor(labelImg, colorLabelImg);
-	// ¼ÇÂ¼ÇĞ¸îµÄÊı×ÖµÄ×ø±ê£¬point¸ñÊ½
+	// è®°å½•åˆ‡å‰²çš„æ•°å­—çš„åæ ‡ï¼Œpointæ ¼å¼
 	vector<pair<Point, Point> > NumSet;
 
 	for (int i = 2; i < labels.size(); i++) {
@@ -858,7 +858,7 @@ vector<pair<int, int> > HorizontalBracket::detectVerticalBracket(Mat image) {
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡Çø·ÖÀ¨ºÅ
+		// æ ¹æ®æ–¹å—çš„å¤§å°åŒºåˆ†æ‹¬å·
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x2);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y2);
 		int x1 = sort_by_row.front().first;
@@ -879,14 +879,14 @@ vector<pair<int, int> > HorizontalBracket::detectVerticalBracket(Mat image) {
 	for (int i = 0; i < NumSet.size(); i++) {
 		if (NumSet[i].second.y - NumSet[i].first.y >= 20) {
 			isLeft = !isLeft;
-			// µ±Ç°ÊÇ×óÀ¨ºÅ
+			// å½“å‰æ˜¯å·¦æ‹¬å·
 			if (isLeft == true) {
 				left_bracket_pos = NumSet[i].second.x;
 			}
-			// µ±Ç°ÊÇÓÒÀ¨ºÅ
+			// å½“å‰æ˜¯å³æ‹¬å·
 			else {
 				brackets.push_back(pair<int, int>(left_bracket_pos, NumSet[i].first.x));
-				// Èç¹ûµ±Ç°ÊÇÓÒÀ¨ºÅ£¬²¢ÇÒÓÒ±ßÊÇÊı×Ö£¬ËµÃ÷¸ÃÀ¨ºÅÍ¬Ê±ÓÖÊÇ×óÀ¨ºÅ
+				// å¦‚æœå½“å‰æ˜¯å³æ‹¬å·ï¼Œå¹¶ä¸”å³è¾¹æ˜¯æ•°å­—ï¼Œè¯´æ˜è¯¥æ‹¬å·åŒæ—¶åˆæ˜¯å·¦æ‹¬å·
 				if (i + 1 < NumSet.size() && NumSet[i + 1].second.y - NumSet[i + 1].first.y < 20) {
 					isLeft = !isLeft;
 					left_bracket_pos = NumSet[i].second.x;
@@ -909,7 +909,7 @@ vector<pair<int, int> > HorizontalBracket::detectVerticalBracket(Mat image) {
 
 
 
-// ¼ì²â´¹Ö±À¨ºÅÍ¼ÏñÀ¨ºÅÄÚµÄÊı×Ö
+// æ£€æµ‹å‚ç›´æ‹¬å·å›¾åƒæ‹¬å·å†…çš„æ•°å­—
 vector<string> HorizontalBracket::detectVerticalBracketNum(Mat image, OCR &ocr) {
 	vector<string> numbers;
 
@@ -934,7 +934,7 @@ vector<string> HorizontalBracket::detectVerticalBracketNum(Mat image, OCR &ocr) 
 	imwrite("result.bmp", grayImg);
 	cv::Mat colorLabelImg;
 	icvprLabelColor(labelImg, colorLabelImg);
-	// ¼ÇÂ¼ÇĞ¸îµÄÊı×ÖµÄ×ø±ê£¬point¸ñÊ½
+	// è®°å½•åˆ‡å‰²çš„æ•°å­—çš„åæ ‡ï¼Œpointæ ¼å¼
 	vector<pair<Point, Point> > NumSet;
 
 	for (int i = 2; i < labels.size(); i++) {
@@ -945,7 +945,7 @@ vector<string> HorizontalBracket::detectVerticalBracketNum(Mat image, OCR &ocr) 
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡Çø·ÖÊı×Ö¿é
+		// æ ¹æ®æ–¹å—çš„å¤§å°åŒºåˆ†æ•°å­—å—
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x2);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y2);
 		int x1 = sort_by_row.front().first;
@@ -965,7 +965,7 @@ vector<string> HorizontalBracket::detectVerticalBracketNum(Mat image, OCR &ocr) 
 	}
 
 
-	// °´ÕÕÁĞ×ø±ê´Ó×óµ½ÓÒµÄË³Ğò½øĞĞÅÅĞò
+	// æŒ‰ç…§åˆ—åæ ‡ä»å·¦åˆ°å³çš„é¡ºåºè¿›è¡Œæ’åº
 	std::sort(NumSet.begin(), NumSet.end(), point_cmp_col2);
 
 	std::cout << "recognition results of integral" << endl;
@@ -973,15 +973,15 @@ vector<string> HorizontalBracket::detectVerticalBracketNum(Mat image, OCR &ocr) 
 	vector<pair<Point, Point> > num;
 	for (int i = 0; i < NumSet.size(); i++) {
 		num.push_back(NumSet[i]);
-		// Ã¿3¸ö½ØÈ¡Ò»¸öÊı×Ö
+		// æ¯3ä¸ªæˆªå–ä¸€ä¸ªæ•°å­—
 		if (num.size() == 3) {
-			// °´ĞĞ½µĞòÅÅÁĞ
+			// æŒ‰è¡Œé™åºæ’åˆ—
 			sort(num.begin(), num.end(), point_cmp_row2);
 			vector<Mat> num_mat;
 			for (int k = 0; k < 3; k++) {
-				// ÇĞ¸îÊı×Ö
+				// åˆ‡å‰²æ•°å­—
 				Mat temp = grayImage(Rect(num[k].first.x, num[k].first.y, num[k].second.x - num[k].first.x + 1, num[k].second.y - num[k].first.y + 1));
-				// Ë³Ê±ÕëĞı×ª90¶È
+				// é¡ºæ—¶é’ˆæ—‹è½¬90åº¦
 				transpose(temp, temp);
 				flip(temp, temp, 1);
 				//imshow("temp", temp);

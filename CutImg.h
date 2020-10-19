@@ -27,12 +27,12 @@ public:
 
 
 	SVM svm;
-	// ÊäÈëÍ¼Æ¬£¬×ª»»Îª¶şÖµÍ¼Æ¬,±³¾°ÊÇ0£¬Ç°¾°ÊÇ1
+	// è¾“å…¥å›¾ç‰‡ï¼Œè½¬æ¢ä¸ºäºŒå€¼å›¾ç‰‡,èƒŒæ™¯æ˜¯0ï¼Œå‰æ™¯æ˜¯1
 	Mat ConvertToBinImage(Mat image, int MaxValue, int BinaryType);
 
 
 	int icvprCcaByTwoPass(const cv::Mat& _binImg, cv::Mat& _lableImg);
-	// ÊäÈëÔ­Í¼Ïñ£¬µÃµ½±ê³ßĞÅÏ¢
+	// è¾“å…¥åŸå›¾åƒï¼Œå¾—åˆ°æ ‡å°ºä¿¡æ¯
 	vector<double> ScaleDetect(Mat image, OCR& ocr);
 
 	vector<double> PeakDetect(Mat image, OCR& ocr);

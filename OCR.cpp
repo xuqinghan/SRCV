@@ -17,7 +17,7 @@ string OCR::DetectNum(vector<Mat> inMats) {
 OCR::OCR()
 {	
 	detector.KNNTrain("trainset");
-	//cout << "OCR³õÊ¼»¯" << endl;
+	//cout << "OCRåˆå§‹åŒ–" << endl;
 }
 
 

@@ -2,16 +2,16 @@
 
 
 void Adaboost::AdaboostTrain(string trainpath) {
-	//»ñÈ¡ÑµÁ·Êı¾İ
+	//è·å–è®­ç»ƒæ•°æ®
 	Mat trainingData;
 	Mat trainingImages;
 	vector<int> trainingLabels;
 	fileop.getTrainSet(trainpath, trainingImages, trainingLabels);
 	Mat(trainingImages).copyTo(trainingData);
 	trainingData.convertTo(trainingData, CV_32FC1);
-	cout << "Adaboost¿ªÊ¼ÑµÁ·£¡" << endl;
+	cout << "Adaboostå¼€å§‹è®­ç»ƒï¼" << endl;
 	for (int k = 0; k < 10; k++) {
-		cout << "Adaboost¿ªÊ¼ÑµÁ·£¡"<<k<< endl;
+		cout << "Adaboostå¼€å§‹è®­ç»ƒï¼"<<k<< endl;
 		vector<int> temp_trainingLabels;
 		for (int i = 0; i < trainingLabels.size(); i++) {
 			if (trainingLabels[i] == k) {
@@ -29,7 +29,7 @@ void Adaboost::AdaboostTrain(string trainpath) {
 
 	//adaboost->train(trainingData, cv::ml::ROW_SAMPLE, classes);
 	//adaboost->save("svm.xml");
-	cout << "Adaboost train done£¡" << endl;
+	cout << "Adaboost train doneï¼" << endl;
 }
 
 void Adaboost::AdaboostTest(string testpath) {
@@ -50,7 +50,7 @@ void Adaboost::AdaboostTest(string testpath) {
 		resize(inMat, inMat, Size(12, 18));
 		Mat p = inMat.reshape(1, 1);
 		p.convertTo(p, CV_32FC1);
-		cout << "Adaboost¿ªÊ¼²âÊÔ£¡" << endl;
+		cout << "Adaboostå¼€å§‹æµ‹è¯•ï¼" << endl;
 		for (int k = 0; k < 10; k++) {
 			int result = (int)adaboost[k]->predict(p);
 			if (result == 1) {
@@ -61,14 +61,14 @@ void Adaboost::AdaboostTest(string testpath) {
 					correctsize++;
 				}
 				else {
-					cout << "´íÎóÊ¶±ğµÄÍ¼Æ¬£º" << filenames[i] << endl;
+					cout << "é”™è¯¯è¯†åˆ«çš„å›¾ç‰‡ï¼š" << filenames[i] << endl;
 				}
 
 				break;
 			}
 		}
 	}
-	cout << "ÕıÈ·ÂÊÎª£º" << double(correctsize) / double(wholesize) << endl;
+	cout << "æ­£ç¡®ç‡ä¸ºï¼š" << double(correctsize) / double(wholesize) << endl;
 
 
 }

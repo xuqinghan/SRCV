@@ -4,14 +4,14 @@
 
 
 
-// ÊäÈëÍ¼Æ¬£¬×ª»»Îª¶şÖµÍ¼Æ¬,±³¾°ÊÇ0£¬Ç°¾°ÊÇ1
+// è¾“å…¥å›¾ç‰‡ï¼Œè½¬æ¢ä¸ºäºŒå€¼å›¾ç‰‡,èƒŒæ™¯æ˜¯0ï¼Œå‰æ™¯æ˜¯1
 Mat CutImg::ConvertToBinImage(Mat image, int MaxValue, int BinaryType) {
 	Mat image_bin, gray;
-	// ×ªÎª»Ò¶ÈÍ¼
+	// è½¬ä¸ºç°åº¦å›¾
 	cvtColor(image, gray, COLOR_BGR2GRAY);
-	// ÖĞÖµÂË²¨
+	// ä¸­å€¼æ»¤æ³¢
 	//medianBlur(gray, gray, 3);
-	// ×ÔÊÊÓ¦ãĞÖµ
+	// è‡ªé€‚åº”é˜ˆå€¼
 	adaptiveThreshold(gray, image_bin, MaxValue, ADAPTIVE_THRESH_MEAN_C, BinaryType, 7, 10);
 	return image_bin;
 }
@@ -199,21 +199,21 @@ void CutImg::icvprLabelColor(const cv::Mat & _labelImg, cv::Mat & _colorLabelImg
 
 
 
-// °´ÕÕĞĞ×ø±êÉıĞòÅÅÁĞ
+// æŒ‰ç…§è¡Œåæ ‡å‡åºæ’åˆ—
 struct cmp_x {
 	bool operator()(pair<int, int> a, pair<int, int> b) {
 		return (a.first < b.first);
 	}
 } cmp_x1;
 
-// °´ÕÕÁĞ×ø±êÉıĞòÅÅÁĞ
+// æŒ‰ç…§åˆ—åæ ‡å‡åºæ’åˆ—
 struct cmp_y {
 	bool operator() (pair<int, int> a, pair<int, int> b) {
 		return (a.second < b.second);
 	}
 } cmp_y1;
 
-// Point°´ÕÕĞĞ×ø±êÉıĞòÅÅÁĞ
+// PointæŒ‰ç…§è¡Œåæ ‡å‡åºæ’åˆ—
 struct point_cmp_row {
 	bool operator ()(pair<Point, Point> a, pair<Point, Point> b) {
 		return (a.first.y < b.first.y);
@@ -229,7 +229,7 @@ struct point_cmp_col {
 
 
 
-// ÊäÈëÔ­Í¼Ïñ£¬ÇĞ¸î±ê³ßÍ¼Æ¬
+// è¾“å…¥åŸå›¾åƒï¼Œåˆ‡å‰²æ ‡å°ºå›¾ç‰‡
 void CutImg::CutNum(Mat image, string save_filename) {
 	Mat grayImage = ConvertToBinImage(image, 255, THRESH_BINARY);
 	Mat binImage = ConvertToBinImage(image, 1, THRESH_BINARY_INV);
@@ -257,7 +257,7 @@ void CutImg::CutNum(Mat image, string save_filename) {
 
 	for (int i = 2; i < labels.size(); i++) {
 
-		// Çå³ıÔëµã
+		// æ¸…é™¤å™ªç‚¹
 		if (labels[i].size() < 5) {
 			for (int k = 0; k < labels[i].size(); k++) {
 				colorLabelImg.at<Vec3b>(labels[i][k].first, labels[i][k].second)[0] = 0;
@@ -275,7 +275,7 @@ void CutImg::CutNum(Mat image, string save_filename) {
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡±ê³ßÎ»ÖÃ
+		// æ ¹æ®æ–¹å—çš„å¤§å°æ ‡å°ºä½ç½®
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x1);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y1);
 		int x1 = sort_by_row.front().first;
@@ -293,7 +293,7 @@ void CutImg::CutNum(Mat image, string save_filename) {
 		}
 	}
 
-	// ¼ÇÂ¼ÇĞ¸îµÄÊı×ÖµÄ×ø±ê£¬point¸ñÊ½
+	// è®°å½•åˆ‡å‰²çš„æ•°å­—çš„åæ ‡ï¼Œpointæ ¼å¼
 	vector<pair<Point, Point> > NumSet;
 
 	for (int i = 0; i < labels.size(); i++) {
@@ -302,7 +302,7 @@ void CutImg::CutNum(Mat image, string save_filename) {
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡±ê³ßÎ»ÖÃ
+		// æ ¹æ®æ–¹å—çš„å¤§å°æ ‡å°ºä½ç½®
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x1);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y1);
 		int x1 = sort_by_row.front().first;
@@ -314,7 +314,7 @@ void CutImg::CutNum(Mat image, string save_filename) {
 		}
 	}
 
-	// °´ÕÕÁĞ×ø±ê´Ó×óµ½ÓÒµÄË³Ğò½øĞĞÅÅĞò
+	// æŒ‰ç…§åˆ—åæ ‡ä»å·¦åˆ°å³çš„é¡ºåºè¿›è¡Œæ’åº
 	std::sort(NumSet.begin(), NumSet.end(), point_cmp_col1);
 	vector<Mat> num1, num2;
 	double num_first, num_second;
@@ -322,7 +322,7 @@ void CutImg::CutNum(Mat image, string save_filename) {
 
 
 	for (int i = 0; i < NumSet.size(); i++) {
-		// ÇĞ¸îÊı×Ö
+		// åˆ‡å‰²æ•°å­—
 		Mat temp = grayImage(Rect(NumSet[i].first.x, NumSet[i].first.y, NumSet[i].second.x - NumSet[i].first.x + 1, NumSet[i].second.y - NumSet[i].first.y + 1));
 		string _save_filename = save_filename + std::to_string(i) + ".bmp";
 		imwrite(_save_filename, temp);
@@ -330,7 +330,7 @@ void CutImg::CutNum(Mat image, string save_filename) {
 
 }
 
-// ÊäÈëÔ­Í¼Ïñ£¬µÃµ½±ê³ßĞÅÏ¢£¬·µ»ØÆğÊ¼µÄÏñËØ×İ×ø±êcol_startºÍÊı×Öcol_start_num£¬µ¥Î»³¤¶ÈµÄÏñËØ´óĞ¡unit_pixels,ÒÔ¼°µ¥Î»³¤¶Èunit
+// è¾“å…¥åŸå›¾åƒï¼Œå¾—åˆ°æ ‡å°ºä¿¡æ¯ï¼Œè¿”å›èµ·å§‹çš„åƒç´ çºµåæ ‡col_startå’Œæ•°å­—col_start_numï¼Œå•ä½é•¿åº¦çš„åƒç´ å¤§å°unit_pixels,ä»¥åŠå•ä½é•¿åº¦unit
 vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 	//cout << "hello " << endl;
 	Mat grayImage = ConvertToBinImage(image, 255, THRESH_BINARY);
@@ -359,7 +359,7 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 
 	for (int i = 2; i < labels.size(); i++) {
 
-		// Çå³ıÔëµã
+		// æ¸…é™¤å™ªç‚¹
 		if (labels[i].size() < 5) {
 			for (int k = 0; k < labels[i].size(); k++) {
 				colorLabelImg.at<Vec3b>(labels[i][k].first, labels[i][k].second)[0] = 0;
@@ -377,7 +377,7 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡±ê³ßÎ»ÖÃ
+		// æ ¹æ®æ–¹å—çš„å¤§å°æ ‡å°ºä½ç½®
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x1);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y1);
 		int x1 = sort_by_row.front().first;
@@ -396,11 +396,11 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 		}
 	}
 
-	// ¿Ì¶È³ßµÄ¿Ì¶È
+	// åˆ»åº¦å°ºçš„åˆ»åº¦
 	vector<int> scale_col_pos;
 
 
-	// É¨ÃèÏßËùÔÚµÄĞĞ
+	// æ‰«æçº¿æ‰€åœ¨çš„è¡Œ
 	int scan_line = scale_row_start + (scale_row_end - scale_row_start) * 2 / 3;
 	cout << "scan line" << scan_line << endl;
 	for (int i = scale_col_start; i <= scale_col_end; i++) {
@@ -408,7 +408,7 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 			|| colorLabelImg.at<Vec3b>(scan_line, i)[1] > 0
 			|| colorLabelImg.at<Vec3b>(scan_line, i)[2] > 0
 			) {
-			// È¡ÖĞ¼äÎ»ÖÃ
+			// å–ä¸­é—´ä½ç½®
 			int cnt = 0;
 			for (int k = i; k <= scale_col_end; k++) {
 				if (colorLabelImg.at<Vec3b>(scan_line, k)[0] > 0
@@ -431,7 +431,7 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 
 	int unit_pixels = (scale_col_pos.back() - scale_col_pos.front()) / (scale_col_pos.size() - 1);
 
-	// ¼ÇÂ¼ÇĞ¸îµÄÊı×ÖµÄ×ø±ê£¬point¸ñÊ½
+	// è®°å½•åˆ‡å‰²çš„æ•°å­—çš„åæ ‡ï¼Œpointæ ¼å¼
 	vector<pair<Point, Point> > NumSet;
 
 	for (int i = 0; i < labels.size(); i++) {
@@ -440,7 +440,7 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 		}
 		vector<pair<int, int> > sort_by_row = labels[i];
 		vector<pair<int, int> > sort_by_col = labels[i];
-		// ¸ù¾İ·½¿éµÄ´óĞ¡±ê³ßÎ»ÖÃ
+		// æ ¹æ®æ–¹å—çš„å¤§å°æ ‡å°ºä½ç½®
 		std::sort(sort_by_row.begin(), sort_by_row.end(), cmp_x1);
 		std::sort(sort_by_col.begin(), sort_by_col.end(), cmp_y1);
 		int x1 = sort_by_row.front().first;
@@ -460,32 +460,32 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 		//}
 	}
 
-	// °´ÕÕÁĞ×ø±ê´Ó×óµ½ÓÒµÄË³Ğò½øĞĞÅÅĞò
+	// æŒ‰ç…§åˆ—åæ ‡ä»å·¦åˆ°å³çš„é¡ºåºè¿›è¡Œæ’åº
 	std::sort(NumSet.begin(), NumSet.end(), point_cmp_col1);
 	vector<Mat> num1, num2;
 	string num_first, num_second;
 	for (int i = 3; i < 6; i++) {
-		// ÇĞ¸îÊı×Ö
+		// åˆ‡å‰²æ•°å­—
 		Mat temp = grayImage(Rect(NumSet[i].first.x, NumSet[i].first.y, NumSet[i].second.x - NumSet[i].first.x + 1, NumSet[i].second.y - NumSet[i].first.y + 1));
 		imwrite("temp.png", temp);
 		temp = imread("temp.png");
 		num1.push_back(temp);
 		rectangle(colorLabelImg, NumSet[i].first, NumSet[i].second, Scalar(0, 0, 255));
 	}
-	// ÓÃOCRÊ¶±ğÊı×Ö
+	// ç”¨OCRè¯†åˆ«æ•°å­—
 	num_first = ocr.DetectNum(num1);
 	for (int i = 6; i < 9; i++) {
-		// ÇĞ¸îÊı×Ö
+		// åˆ‡å‰²æ•°å­—
 		Mat temp = grayImage(Rect(NumSet[i].first.x, NumSet[i].first.y, NumSet[i].second.x - NumSet[i].first.x + 1, NumSet[i].second.y - NumSet[i].first.y + 1));
 		imwrite("temp.png", temp);
 		temp = imread("temp.png");
 		num2.push_back(temp);
 		rectangle(colorLabelImg, NumSet[i].first, NumSet[i].second, Scalar(0, 0, 255));
 	}
-	// ÓÃOCRÊ¶±ğÊı×Ö
+	// ç”¨OCRè¯†åˆ«æ•°å­—
 	num_second = ocr.DetectNum(num2);
 
-	// ¼ÆËã¿Ì¶È1£¬¿Ì¶È2£¬¼ÇÂ¼ÆğÊ¼µÄÏñËØ×İ×ø±êcol_startºÍÊı×Öcol_start_num£¬µ¥Î»³¤¶ÈµÄÏñËØ´óĞ¡unit_pixels,ÒÔ¼°µ¥Î»³¤¶Èunit
+	// è®¡ç®—åˆ»åº¦1ï¼Œåˆ»åº¦2ï¼Œè®°å½•èµ·å§‹çš„åƒç´ çºµåæ ‡col_startå’Œæ•°å­—col_start_numï¼Œå•ä½é•¿åº¦çš„åƒç´ å¤§å°unit_pixels,ä»¥åŠå•ä½é•¿åº¦unit
 	int col_start = scale_col_pos[1];
 
 	double col_start_num, col_end_num;
@@ -522,7 +522,7 @@ vector<double> CutImg::ScaleDetect(Mat image, OCR& ocr) {
 
 CutImg::CutImg()
 {	
-	//cout << "cut³õÊ¼»¯"<< endl;
+	//cout << "cutåˆå§‹åŒ–"<< endl;
 	svm.SVMTrain("testset");
 
 }
